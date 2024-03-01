@@ -64,11 +64,11 @@ func SearchDocByDocID(indexName string, id int) (*elastic.GetResult, error) {
 func TermQuery(indexName, field, value string, offset, limit int) (*elastic.SearchResult, error) {
 	termQuery := elastic.NewTermQuery(field, value)
 	searchResult, err := esClient.Search().
-		Index(indexName). // search in index "twitter"
-		Query(termQuery). // specify the query
+		Index(indexName).         // search in index "twitter"
+		Query(termQuery).         // specify the query
 		From(offset).Size(limit). // take documents 0-9
-		Pretty(true). // pretty print request and response JSON
-		Do(ctx) // execute
+		Pretty(true).             // pretty print request and response JSON
+		Do(ctx)                   // execute
 
 	return searchResult, err
 }

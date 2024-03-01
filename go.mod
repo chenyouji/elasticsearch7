@@ -1,4 +1,4 @@
-module 2107a-zg6/work8
+module github.com/chenyouji/elasticsearch7
 
 go 1.20
 
