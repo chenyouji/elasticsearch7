@@ -101,7 +101,7 @@ func RangeQuery(indexName, field string, offset, limit int, gte, lte interface{}
 }
 
 // 高亮搜索
-func searchWithHighlight(indexName, field, msg string, offset, limit int) (*elastic.SearchResult, error) {
+func SearchWithHighlight(indexName, field, msg string, offset, limit int) (*elastic.SearchResult, error) {
 	query := elastic.NewMatchQuery(field, msg)
 	highlight := elastic.NewHighlight().Field("message")
 	highlight.PostTags("<span color='red'>")
