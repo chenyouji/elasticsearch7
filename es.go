@@ -104,8 +104,8 @@ func RangeQuery(indexName, field string, offset, limit int, gte, lte interface{}
 func SearchWithHighlight(indexName, field, msg string, offset, limit int) (*elastic.SearchResult, error) {
 	query := elastic.NewMatchQuery(field, msg)
 	highlight := elastic.NewHighlight().Field("message")
-	highlight.PostTags("<span color='red'>")
-	highlight.PreTags("</span>")
+	highlight.PreTags("<span color='red'>")
+	highlight.PostTags("</span>")
 	result, err := esClient.Search().
 		Index(indexName).
 		Query(query).
