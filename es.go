@@ -115,3 +115,27 @@ func SearchWithHighlight(indexName, field, msg string, offset, limit int) (*elas
 		Do(ctx)
 	return result, err
 }
+
+// 同时满足两个字段查询
+func SearchWithBothFields(indexName string, field1, field2 string, field1Value, field2Value interface{}) (*elastic.SearchResult, error) {
+	termQuery1 := elastic.NewTermQuery(field1, field1Value)
+	termQuery2 := elastic.NewTermQuery(field2, field2Value)
+	boolQuery := elastic.NewBoolQuery().Must(termQuery1, termQuery2)
+	result, err := esClient.Search().
+		Index(indexName).
+		Query(boolQuery).
+		Do(ctx)
+	return result, err
+}
+func SearchWithMixedFields(indexName string, field1, field2 string, field1Value, field2Value interface{}) (*elastic.SearchResult, error) {
+	termQuery1 := elastic.NewTermQuery(field1, field1Value)
+	termQuery2 := elastic.NewTermQuery(field2, field2Value)
+	//可以不匹配
+	notMatchQuery2 := elastic.NewBoolQuery().MustNot(termQuery2)
+	boolQuery := elastic.NewBoolQuery().Must(termQuery1).Should(termQuery2).Should(notMatchQuery2)
+	result, err := esClient.Search().
+		Index(indexName).
+		Query(boolQuery).
+		Do(ctx)
+	return result, err
+}
