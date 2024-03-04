@@ -127,6 +127,8 @@ func SearchWithBothFields(indexName string, field1, field2 string, field1Value, 
 		Do(ctx)
 	return result, err
 }
+
+// 两个条件可以只满足一个
 func SearchWithMixedFields(indexName string, field1, field2 string, field1Value, field2Value interface{}) (*elastic.SearchResult, error) {
 	termQuery1 := elastic.NewTermQuery(field1, field1Value)
 	termQuery2 := elastic.NewTermQuery(field2, field2Value)
